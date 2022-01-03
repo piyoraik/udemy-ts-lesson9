@@ -51,10 +51,37 @@ class ProjectInput {
     this.attach();
   }
 
+  private getherUserInput(): [string, string, number] | void {
+    const enterdTitle = this.titleInputElement.value;
+    const enterdDescription = this.descriptionInputElement.value;
+    const enterdManday = this.mandayInputElement.value;
+
+    if (
+      enterdTitle.trim().length === 0 ||
+      enterdDescription.trim().length === 0 ||
+      enterdManday.trim().length === 0
+    ) {
+      alert("入力値が正しくありません。");
+    } else {
+      return [enterdTitle, enterdDescription, +enterdManday];
+    }
+  }
+
+  private clearInputs() {
+    this.titleInputElement.value = "";
+    this.descriptionInputElement.value = "";
+    this.mandayInputElement.value = "";
+  }
+
   @Autobind
   private submitHandler(event: Event) {
     event.preventDefault();
-    console.log(this.titleInputElement.value);
+    const userInput = this.getherUserInput();
+    if (Array.isArray(userInput)) {
+      const [title, desc, manday] = userInput;
+      console.log(title, desc, manday);
+      this.clearInputs();
+    }
   }
 
   private configure() {
